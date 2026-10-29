@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Digital Menu & QR Order | Saffron & Silk Bistro</title>
+  <meta name="description" content="Instant QR dine-in self-ordering and menu for Saffron & Silk Bistro.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/customer.css">
+</head>
+<body>
+  <div class="customer-app">
+    <!-- Top Sticky Bar -->
+    <header class="customer-header">
+      <div class="restaurant-brand">
+        <div class="brand-icon">🍽️</div>
+        <div class="brand-info">
+          <h1>Saffron &amp; Silk</h1>
+          <p style="font-size: 0.72rem; color: var(--text-secondary); margin: 0;">Artisan Indian &amp; Asian Dining</p>
+        </div>
+      </div>
+      <div class="table-badge" id="current-table-badge">
+        <span class="dot"></span>
+        <span id="badge-table-text">Table 1</span>
+      </div>
+    </header>
+
+    <!-- Demo Table Switcher Bar -->
+    <div class="table-selector-bar">
+      <span>📍 You are ordering at:</span>
+      <select id="table-switcher-select" class="table-select" aria-label="Select table">
+        <option value="1">Table 1 (Window)</option>
+        <option value="2">Table 2 (Booth)</option>
+        <option value="3" selected>Table 3 (Patio)</option>
+        <option value="4">Table 4 (Center)</option>
+        <option value="5">Table 5 (Corner)</option>
+        <option value="6">Table 6 (Large Group)</option>
+        <option value="7">Table 7 (Bar High-Top)</option>
+        <option value="8">Table 8 (Private Nook)</option>
+      </select>
+    </div>
+
+    <!-- Security & GPS Geofencing Status Bar -->
+    <div style="background: #f1f5f9; padding: 8px 16px; border-bottom: 1px solid var(--border); font-size: 0.8rem; display: flex; flex-direction: column; gap: 6px;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 700; color: var(--text-secondary); display: flex; align-items: center; gap: 4px;">
+          <span>🛡️ Security:</span>
+          <span id="geofence-badge" class="badge" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">
+            🟢 Inside Venue (&lt;50m)
+          </span>
+        </span>
+        <!-- Simulation Selector for testing both states -->
+        <select id="gps-sim-select" style="font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border); font-weight: 600; background: #fff;">
+          <option value="inside" selected>📍 Sim: Inside (Instant Fire)</option>
+          <option value="outside">🚗 Sim: Outside (Needs Approval)</option>
+          <option value="real">🛰️ Real Phone GPS</option>
+        </select>
+      </div>
+
+      <!-- Warning notice if outside geofence -->
+      <div id="outside-warning-banner" style="display: none; background: #fffbeb; border: 1px solid #fde68a; color: #b45309; padding: 6px 10px; border-radius: 6px; font-size: 0.74rem;">
+        ⚠️ <strong>Outside Dining Geofence:</strong> Orders submitted from outside will require <strong>Cashier Verification</strong> before reaching the kitchen.
+      </div>
+    </div>
+
+    <!-- Session Expired Full Screen Modal -->
+    <div id="session-expired-overlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; padding: 32px; text-align: center; color: #fff;">
+      <div style="width: 72px; height: 72px; background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin-bottom: 20px;">
+        🔒
+      </div>
+      <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 10px;">Dining Session Closed</h2>
+      <p style="font-size: 0.9rem; color: #94a3b8; max-width: 320px; line-height: 1.5; margin-bottom: 24px;">
+        This table session has ended and was settled at the cashier counter. Old saved links or bookmarks cannot be reused.
+      </p>
+      <button id="btn-rejoin-session" style="background: var(--primary); color: #fff; border: none; padding: 12px 24px; border-radius: var(--radius-md); font-weight: 700; font-size: 0.9rem; cursor: pointer;">
+        🔄 Scan Current Active QR
+      </button>
+    </div>
+
+    <!-- Live Order Tracker (Displayed if table has active orders) -->
+    <div id="live-tracker-container" style="display: none;">
+      <div class="live-tracker-panel">
+        <div class="tracker-header">
+          <div class="tracker-title">
+            <span class="pulse-indicator"></span>
+            <span id="tracker-order-title">Order In Progress</span>
+          </div>
+          <span id="tracker-order-id" style="font-size: 0.8rem; font-family: 'Outfit', monospace; opacity: 0.8;">ORD-101</span>
+        </div>
+
+        <!-- 4-Step Progress Tracker -->
+        <div class="step-tracker">
+          <div class="step-node" id="step-received">
+            <div class="node-circle">1</div>
+            <span class="node-label">Received</span>
+          </div>
+          <div class="step-node" id="step-cooking">
+            <div class="node-circle">2</div>
+            <span class="node-label">Cooking</span>
+          </div>
+          <div class="step-node" id="step-ready">
+            <div class="node-circle">3</div>
+            <span class="node-label">Ready</span>
+          </div>
+          <div class="step-node" id="step-served">
+            <div class="node-circle">4</div>
+            <span class="node-label">Served</span>
+          </div>
+        </div>
+
+        <div id="tracker-status-message" style="font-size: 0.82rem; text-align: center; color: #cbd5e1; margin-top: 6px;">
+          The kitchen has received your ticket and is preparing your meal fresh!
+        </div>
+
+        <!-- Assistance & Bill Buttons -->
+        <div class="customer-quick-actions">
+          <button class="quick-btn" id="btn-call-waiter">
+            🔔 Call Waiter
+          </button>
+          <button class="quick-btn" id="btn-request-bill">
+            🧾 Request Bill
+          </button>
+        </div>
+
+        <!-- Counter Payment Notice -->
+        <div class="pay-counter-box" id="bill-requested-banner" style="display: none;">
+          <span style="font-size: 1.2rem;">💳</span>
+          <div>
+            <strong>Bill Requested!</strong>
+            <p style="margin: 2px 0 0; font-size: 0.75rem;">Please walk to the front counter to pay via Cash, Card, or UPI.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search & Dietary Filters -->
+    <div class="search-filter-section">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="menu-search-input" placeholder="Search dishes, drinks, spice level..." autocomplete="off">
+      </div>
+      <div class="filter-pills">
+        <button class="pill-btn active" data-filter="all">All Items</button>
+        <button class="pill-btn" data-filter="veg">🟢 Veg</button>
+        <button class="pill-btn" data-filter="non-veg">🔴 Non-Veg</button>
+        <button class="pill-btn" data-filter="spicy">🌶️ Spicy</button>
+        <button class="pill-btn" data-filter="bestseller">⭐ Bestseller</button>
+      </div>
+    </div>
+
+    <!-- Category Scroll Bar -->
+    <nav class="category-nav" id="category-nav">
+      <!-- Categories rendered dynamically -->
+    </nav>
+
+    <!-- Menu List -->
+    <main class="menu-feed" id="menu-feed">
+      <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+        Loading curated menu...
+      </div>
+    </main>
+
+    <!-- Floating Cart Bar -->
+    <div class="cart-floating-bar" id="cart-floating-bar" style="display: none;">
+      <div class="cart-bar-left">
+        <div class="cart-count-bubble" id="cart-total-count">0</div>
+        <div>
+          <div class="cart-bar-price" id="cart-total-price">₹0.00</div>
+          <div style="font-size: 0.75rem; opacity: 0.85;">View itemized tray</div>
+        </div>
+      </div>
+      <div class="cart-bar-action">
+        <span>View Order</span>
+        <span>➔</span>
+      </div>
+    </div>
+
+    <!-- Cart Bottom Sheet Modal -->
+    <div class="modal-overlay" id="cart-modal-overlay"></div>
+    <div class="bottom-drawer" id="cart-drawer">
+      <div class="drawer-handle"></div>
+      <div class="drawer-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <h3>Your Order Tray</h3>
+          <span id="drawer-table-name" style="font-size: 0.8rem; background: #f1f5f9; padding: 2px 8px; border-radius: 4px; font-weight: 700;">Table 1</span>
+        </div>
+        <button id="close-drawer-btn" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+
+      <div class="drawer-body">
+        <div id="cart-items-list">
+          <!-- Cart items injected here -->
+        </div>
+
+        <!-- Special Kitchen Instruction Notes -->
+        <div style="margin-top: 16px;">
+          <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 4px;">
+            ✍️ Kitchen Notes / Dietary Requests
+          </label>
+          <textarea id="order-special-notes" class="order-notes-input" rows="2" placeholder="e.g. Less spicy, dressing on the side, allergic to peanuts..."></textarea>
+        </div>
+
+        <!-- Bill Summary -->
+        <div class="bill-breakdown">
+          <div class="bill-line">
+            <span>Subtotal</span>
+            <span id="bill-subtotal">₹0.00</span>
+          </div>
+          <div class="bill-line">
+            <span>GST / VAT (5%)</span>
+            <span id="bill-tax">₹0.00</span>
+          </div>
+          <div class="bill-line total">
+            <span>Total Payable at Counter</span>
+            <span id="bill-grand-total">₹0.00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <button class="primary-action-btn" id="btn-submit-order">
+          <span>🚀 Place Order to Kitchen</span>
+          <span id="btn-submit-total">₹0.00</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Dish Note Customization Modal -->
+    <div class="modal-overlay" id="note-modal-overlay"></div>
+    <div class="bottom-drawer" id="note-drawer" style="max-height: 40vh;">
+      <div class="drawer-handle"></div>
+      <div class="drawer-header">
+        <h3 id="note-item-name">Special Request</h3>
+        <button id="close-note-btn" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+      <div class="drawer-body">
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">Add specific instructions for this dish:</p>
+        <input type="text" id="note-item-input" class="search-box" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px;" placeholder="e.g. Extra spicy, no garlic, crispier...">
+      </div>
+      <div class="drawer-footer">
+        <button class="primary-action-btn" id="btn-save-note">Save Instruction</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Socket.IO & App Scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/socket-client.js"></script>
+  <script src="js/customer.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "Table 1",
+    "capacity": 2,
+    "status": "available",
+    "sessionToken": "ses_mhlb13z",
+    "activeOrders": [],
+    "lastOrderAt": "2026-10-26T18:32:51.673Z",
+    "billRequestedAt": null
+  },
+  {
+    "id": 2,
+    "name": "Table 2",
+    "capacity": 2,
+    "status": "available",
+    "sessionToken": "ses_tmyo9ck",
+    "activeOrders": []
+  },
+  {
+    "id": 3,
+    "name": "Table 3",
+    "capacity": 4,
+    "status": "available",
+    "sessionToken": "ses_ohlyw70",
+    "activeOrders": []
+  },
+  {
+    "id": 4,
+    "name": "Table 4",
+    "capacity": 4,
+    "status": "available",
+    "sessionToken": "ses_ls52lxo",
+    "activeOrders": []
+  },
+  {
+    "id": 5,
+    "name": "Table 5",
+    "capacity": 6,
+    "status": "available",
+    "sessionToken": "ses_a4ig6ei",
+    "activeOrders": []
+  },
+  {
+    "id": 6,
+    "name": "Table 6",
+    "capacity": 6,
+    "status": "served",
+    "sessionToken": "ses_xfhr7by",
+    "activeOrders": [
+      "ORD-106"
+    ],
+    "lastOrderAt": "2026-10-26T16:04:05.258Z"
+  },
+  {
+    "id": 7,
+    "name": "Table 7",
+    "capacity": 4,
+    "status": "served",
+    "sessionToken": "ses_djvz967",
+    "activeOrders": [
+      "ORD-105"
+    ],
+    "lastOrderAt": "2026-10-26T16:04:03.552Z"
+  },
+  {
+    "id": 8,
+    "name": "Table 8",
+    "capacity": 8,
+    "status": "available",
+    "sessionToken": "ses_xo975u1",
+    "activeOrders": []
+  }
+]

@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  /* Guest menu: an editorial serif for brand & course headings */
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+  /* Kitchen display: built for reading at a distance */
+  --font-kds: "Barlow", ui-sans-serif, system-ui, sans-serif;
+  --font-kds-display: "Barlow Condensed", "Barlow", ui-sans-serif, sans-serif;
+
+  /* Warm paper tone for the guest menu */
+  --color-cream-50: #fdfaf5;
+  --color-cream-100: #f8f1e5;
+  --color-cream-200: #efe3cf;
+
+  /*
+   * Brand palette (role-based names; change the values here to re-theme the whole app)
+   * brand  = marigold — the action colour. Fills always carry INK text (≈9.8:1), never white.
+   * accent = deep aubergine — wordmark, accent text, links, focus rings and dark surfaces.
+   * Status colours stay reserved: emerald = veg/success, red = non-veg/danger, amber = KDS "cooking".
+   */
+  --color-brand-50: #fff8e6;
+  --color-brand-100: #ffefc2;
+  --color-brand-200: #ffdd85;
+  --color-brand-300: #ffc947;
+  --color-brand-400: #ffb31f;
+  --color-brand-500: #f59a00;
+  --color-brand-600: #d17d00;
+  --color-brand-700: #a85f00;
+  --color-brand-800: #7f4600;
+
+  --color-accent-50: #f8f3f8;
+  --color-accent-100: #efe3ef;
+  --color-accent-200: #dcc4dc;
+  --color-accent-300: #c29fc1;
+  --color-accent-400: #9d6b9c;
+  --color-accent-500: #7b3f7a;
+  --color-accent-600: #643264;
+  --color-accent-700: #4f2650;
+  --color-accent-800: #3b1c3c;
+  --color-accent-900: #2a142b;
+
+  --color-ink: #1c1917;
+
+  --animate-pop-in: pop-in 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-in-right: slide-in-right 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-up: slide-up 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-pulse-slow: pulse-ring 1.8s ease-in-out infinite;
+
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 rgb(239 68 68 / 0.35); }
+    50% { box-shadow: 0 0 0 6px rgb(239 68 68 / 0); }
+  }
+
+  @keyframes pop-in {
+    from { opacity: 0; transform: scale(0.96) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(24px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slide-up {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Guest menu */
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-bump: bump 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+  --animate-draw: draw 0.6s 0.15s cubic-bezier(0.65, 0, 0.35, 1) both;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bump {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes draw {
+    from { stroke-dashoffset: 48; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* Kitchen display: a new ticket glides in with a short glow, then settles */
+  --animate-ticket-in: ticket-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-new-glow: new-glow 2s ease-in-out infinite;
+
+  @keyframes ticket-in {
+    from { opacity: 0; transform: translateY(-14px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes new-glow {
+    0%, 100% { box-shadow: 0 0 0 2px rgb(56 189 248 / 0.9), 0 0 0 0 rgb(56 189 248 / 0); }
+    50% { box-shadow: 0 0 0 2px rgb(56 189 248 / 0.9), 0 0 28px 4px rgb(56 189 248 / 0.35); }
+  }
+}
+
+/* Loading placeholder that sweeps softly */
+@utility skeleton {
+  background: linear-gradient(90deg, var(--color-cream-100) 25%, var(--color-cream-50) 50%, var(--color-cream-100) 75%);
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* Anyone who asked their device for less motion gets none */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-slate-50 font-sans text-slate-900 antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+  button:not(:disabled), [role="button"] {
+    cursor: pointer;
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff !important; }
+
+  /* When a receipt is open, print only the receipt */
+  body:has(.print-receipt) * { visibility: hidden; }
+  body:has(.print-receipt) .print-receipt,
+  body:has(.print-receipt) .print-receipt * { visibility: visible; }
+  .print-receipt { position: fixed; inset: 0 auto auto 0; width: 80mm; border: none !important; }
+}

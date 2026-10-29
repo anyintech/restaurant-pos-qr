@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitchen Display System (KDS) | Saffron & Silk</title>
+  <meta name="description" content="High contrast real-time kitchen order tickets and prep timers for restaurant cooks.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/kds.css">
+</head>
+<body class="kds-theme">
+  <div class="kds-container">
+    <!-- KDS Header Bar -->
+    <header class="kds-header">
+      <div class="kds-branding">
+        <span class="kds-badge">KDS LIVE</span>
+        <h1 class="kds-title">🍳 Kitchen Order Display</h1>
+      </div>
+
+      <div class="kds-controls">
+        <div class="kds-stat-pill">
+          <span>Active Tickets:</span>
+          <strong id="active-tickets-count">0</strong>
+        </div>
+
+        <button id="sound-toggle-btn" class="sound-toggle-btn active" title="Toggle audio chime alert">
+          <span id="sound-toggle-icon">🔊</span>
+          <span id="sound-toggle-label">Alerts: ON</span>
+        </button>
+
+        <div id="kds-staff-badge" style="display: flex; align-items: center; gap: 6px; background: #1e293b; border: 1px solid #334155; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; color: #38bdf8;">
+          👨‍🍳 <span id="kds-staff-name">Line Chef</span>
+        </div>
+
+        <button id="btn-lock-kds" class="sound-toggle-btn" style="background: #1e293b; color: #ef4444; border-color: #7f1d1d;" title="Lock Kitchen Display">
+          🔒 Lock
+        </button>
+
+        <a href="index.html" style="color: #94a3b8; text-decoration: none; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 4px; padding: 6px 12px; background: #1e293b; border-radius: 6px;">
+          🏠 Hub
+        </a>
+
+        <div class="kds-clock" id="kds-clock">--:--:--</div>
+      </div>
+    </header>
+
+    <!-- KDS 4-Digit Touchscreen PIN Keypad Modal -->
+    <div id="kds-auth-overlay" style="display: flex; position: fixed; inset: 0; background: rgba(11, 15, 25, 0.96); backdrop-filter: blur(8px); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
+      <div style="background: #131b2e; border: 2px solid #23304a; border-radius: 24px; padding: 32px 28px; width: 100%; max-width: 360px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.6);">
+        <div style="width: 56px; height: 56px; background: #f97316; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 16px; box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);">
+          🍳
+        </div>
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 4px;">Kitchen Staff Access</h2>
+        <p style="font-size: 0.82rem; color: #94a3b8; margin-bottom: 20px;">Enter 4-Digit Cook PIN to unlock order tickets</p>
+
+        <!-- 4 PIN Dots -->
+        <div style="display: flex; justify-content: center; gap: 14px; margin-bottom: 24px;">
+          <div class="kds-pin-dot" id="kds-dot-0" style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid #475569; background: transparent; transition: all 0.2s;"></div>
+          <div class="kds-pin-dot" id="kds-dot-1" style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid #475569; background: transparent; transition: all 0.2s;"></div>
+          <div class="kds-pin-dot" id="kds-dot-2" style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid #475569; background: transparent; transition: all 0.2s;"></div>
+          <div class="kds-pin-dot" id="kds-dot-3" style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid #475569; background: transparent; transition: all 0.2s;"></div>
+        </div>
+
+        <!-- Touchscreen Numeric Keypad -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px;">
+          <button class="kds-key-btn" onclick="window.KdsAuth.tapKey('1')">1</button>
+          <button class="kds-key-btn" onclick="window.KdsAuth.tapKey('2')">2</button>
+          <button class="kds-key-btn" onclick="window.KdsAuth.tapKey('3')">3</button>
+          <button class="kds-key-btn" onclick="window.KdsAuth.tapKey('4')">4</button>
+          <button class="kds-key-btn" onclick="window.KdsAuth.tapKey('5')">5</button>
+          <button class="kds-key-btn" onclick="window.KdsAuth.tapKey('6')">6</button>
+          <button class="kds-key-btn" onclick="window.KdsAuth.tapKey('7')">7</button>
+          <button class="kds-key-btn" onclick="window.KdsAuth.tapKey('8')">8</button>
+          <button class="kds-key-btn" onclick="window.KdsAuth.tapKey('9')">9</button>
+          <button class="kds-key-btn" style="background: #1e293b; color: #94a3b8; font-size: 0.9rem;" onclick="window.KdsAuth.clearPin()">CLEAR</button>
+          <button class="kds-key-btn" onclick="window.KdsAuth.tapKey('0')">0</button>
+          <button class="kds-key-btn" style="background: #1e293b; color: #94a3b8; font-size: 1.2rem;" onclick="window.KdsAuth.backspace()">⌫</button>
+        </div>
+
+        <div id="kds-auth-error" style="display: none; color: #ef4444; font-size: 0.8rem; font-weight: 700; margin-bottom: 12px;"></div>
+
+        <!-- Quick Demo One-Tap Unlock -->
+        <button onclick="window.KdsAuth.autoFillPin('2024')" style="background: rgba(249, 115, 22, 0.15); border: 1px dashed #f97316; color: #fb923c; width: 100%; padding: 10px; border-radius: 10px; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
+          ⚡ Quick Demo Tap (PIN: 2024)
+        </button>
+      </div>
+    </div>
+
+    <style>
+      .kds-key-btn {
+        background: #1e293b;
+        border: 1px solid #334155;
+        color: #fff;
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        padding: 14px 0;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .kds-key-btn:active {
+        background: #f97316;
+        color: #fff;
+        transform: scale(0.95);
+      }
+    </style>
+
+    <!-- Ticket Grid Container -->
+    <main class="kds-grid" id="kds-grid">
+      <div class="empty-kds">
+        <div class="empty-kds-icon">✨</div>
+        <h2>All Caught Up!</h2>
+        <p style="margin-top: 6px;">No pending kitchen orders. Incoming tickets will appear here with live chime alerts.</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Socket.IO & App Scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/socket-client.js"></script>
+  <script src="js/kds.js"></script>
+</body>
+</html>

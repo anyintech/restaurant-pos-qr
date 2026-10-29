@@ -1,0 +1,337 @@
+/* Kitchen Display System (KDS) High-Contrast Theme */
+body.kds-theme {
+  background-color: #0b0f19;
+  color: #f8fafc;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+.kds-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* KDS Top Bar */
+.kds-header {
+  background: #131b2e;
+  border-bottom: 2px solid #1e293b;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.kds-branding {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.kds-badge {
+  background: #f97316;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
+}
+
+.kds-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.kds-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.kds-stat-pill {
+  background: #1e293b;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kds-stat-pill strong {
+  color: #f97316;
+  font-size: 1.1rem;
+}
+
+.sound-toggle-btn {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.sound-toggle-btn.active {
+  background: #065f46;
+  border-color: #10b981;
+  color: #a7f3d0;
+}
+
+.kds-clock {
+  font-family: 'Outfit', monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: 0.05em;
+}
+
+/* KDS Ticket Grid */
+.kds-grid {
+  flex: 1;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  align-content: start;
+}
+
+/* Ticket Card */
+.ticket-card {
+  background: #182238;
+  border: 2px solid #23304a;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  overflow: hidden;
+}
+
+.ticket-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Urgency Top Border & Header */
+.ticket-header {
+  padding: 14px 18px;
+  background: #131b2e;
+  border-bottom: 2px solid #23304a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-table-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ticket-order-id {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.ticket-timer {
+  font-family: 'Outfit', monospace;
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Urgency Tiers */
+.ticket-card.urgency-fresh {
+  border-color: #059669;
+}
+.ticket-card.urgency-fresh .ticket-timer {
+  background: #064e3b;
+  color: #34d399;
+}
+
+.ticket-card.urgency-medium {
+  border-color: #d97706;
+}
+.ticket-card.urgency-medium .ticket-timer {
+  background: #78350f;
+  color: #fbbf24;
+}
+
+.ticket-card.urgency-late {
+  border-color: #dc2626;
+  animation: pulse-border-red 2s infinite;
+}
+.ticket-card.urgency-late .ticket-timer {
+  background: #7f1d1d;
+  color: #f87171;
+}
+
+@keyframes pulse-border-red {
+  0%, 100% { border-color: #dc2626; }
+  50% { border-color: #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+}
+
+/* Ticket Items Body */
+.ticket-body {
+  padding: 16px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticket-item-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  background: #1e293b;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  user-select: none;
+}
+
+.ticket-item-row:hover {
+  background: #283548;
+}
+
+.item-check {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #475569;
+  border-radius: 6px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  transition: all var(--transition-fast);
+}
+
+.ticket-item-row.done .item-check {
+  background: #10b981;
+  border-color: #10b981;
+  color: #ffffff;
+}
+
+.ticket-item-row.done .item-name {
+  text-decoration: line-through;
+  color: #64748b;
+}
+
+.item-qty {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #f97316;
+  min-width: 24px;
+}
+
+.item-details {
+  flex: 1;
+}
+
+.item-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.item-notes {
+  font-size: 0.8rem;
+  color: #f59e0b;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.ticket-general-notes {
+  background: rgba(245, 158, 11, 0.15);
+  border-left: 3px solid #f59e0b;
+  color: #fbbf24;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+/* Ticket Actions Footer */
+.ticket-footer {
+  padding: 12px 18px;
+  background: #131b2e;
+  border-top: 2px solid #23304a;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-kds-action {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.btn-cooking {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.btn-cooking:hover {
+  background: #2563eb;
+}
+
+.btn-ready {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.btn-ready:hover {
+  background: #059669;
+}
+
+.btn-served {
+  background: #8b5cf6;
+  color: #ffffff;
+}
+
+.btn-served:hover {
+  background: #7c3aed;
+}
+
+/* Empty Kitchen State */
+.empty-kds {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 20px;
+  color: #64748b;
+}
+
+.empty-kds-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}

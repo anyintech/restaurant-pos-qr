@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counter POS &amp; Table Billing | Saffron &amp; Silk</title>
+  <meta name="description" content="Cashier POS station for real-time table tabs, bill generation, thermal receipt printing, and floor management.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/counter.css">
+</head>
+<body class="pos-app">
+  <!-- POS Top Bar -->
+  <header class="pos-navbar">
+    <div class="pos-brand-group">
+      <h1>
+        <span>🖥️</span>
+        <span>Saffron &amp; Silk <span style="font-weight: 400; font-size: 1.1rem; color: var(--text-secondary);">| Cashier POS</span></span>
+      </h1>
+    </div>
+
+    <div class="pos-nav-links">
+      <div id="cashier-active-badge" style="display: none; align-items: center; gap: 6px; background: #f8fafc; border: 1px solid var(--border); padding: 6px 12px; border-radius: var(--radius-md); font-weight: 700; font-size: 0.85rem; color: var(--text-primary);">
+        💼 <span id="active-cashier-name">Priya Sharma (#101)</span>
+      </div>
+      <button id="btn-lock-cashier" class="nav-pill-btn" style="color: #ef4444; border-color: #fecaca; display: none;" title="Lock Cashier Register">
+        🔒 Lock / Switch
+      </button>
+
+      <span id="pending-approvals-pill" class="badge" style="display: none; background: #fef2f2; color: #dc2626; border: 1px solid #fca5a5; font-weight: 800; animation: pulse-ring 1.5s infinite;">
+        🚨 0 Outside Orders Need Approval
+      </span>
+      <div id="pos-clock" style="font-family: 'Outfit', monospace; font-weight: 700; font-size: 1rem; color: var(--text-secondary); margin-right: 8px;">
+        --:--:--
+      </div>
+      <a href="kds.html" target="_blank" class="nav-pill-btn">
+        <span>🍳 Kitchen KDS</span>
+      </a>
+      <a href="admin.html" target="_blank" class="nav-pill-btn">
+        <span>🖨️ Table QR Stands</span>
+      </a>
+      <a href="index.html" class="nav-pill-btn">
+        <span>🏠 Hub</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Cashier 4-Digit PIN & ID Login Modal -->
+  <div id="cashier-auth-overlay" style="display: flex; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 24px; padding: 36px 32px; width: 100%; max-width: 380px; text-align: center; box-shadow: var(--shadow-xl);">
+      <div style="width: 60px; height: 60px; background: #eff6ff; color: #2563eb; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 16px;">
+        🖥️
+      </div>
+      <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;">Cashier Register Sign-In</h2>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px;">Select your Cashier ID and enter 4-digit PIN</p>
+
+      <!-- Staff Selector -->
+      <div style="margin-bottom: 16px; text-align: left;">
+        <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 4px;">Select Cashier ID:</label>
+        <select id="cashier-id-select" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); font-weight: 700; font-size: 0.9rem; background: #f8fafc;">
+          <option value="101" selected>ID #101 • Priya Sharma (Cashier #1)</option>
+          <option value="102">ID #102 • Rahul Verma (Cashier #2)</option>
+        </select>
+      </div>
+
+      <!-- 4 PIN Dots -->
+      <div style="display: flex; justify-content: center; gap: 14px; margin-bottom: 20px;">
+        <div class="pos-pin-dot" id="pos-dot-0" style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid #cbd5e1; background: transparent; transition: all 0.2s;"></div>
+        <div class="pos-pin-dot" id="pos-dot-1" style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid #cbd5e1; background: transparent; transition: all 0.2s;"></div>
+        <div class="pos-pin-dot" id="pos-dot-2" style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid #cbd5e1; background: transparent; transition: all 0.2s;"></div>
+        <div class="pos-pin-dot" id="pos-dot-3" style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid #cbd5e1; background: transparent; transition: all 0.2s;"></div>
+      </div>
+
+      <!-- Numeric Keypad -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px;">
+        <button class="pos-num-btn" onclick="window.PosAuth.tapKey('1')">1</button>
+        <button class="pos-num-btn" onclick="window.PosAuth.tapKey('2')">2</button>
+        <button class="pos-num-btn" onclick="window.PosAuth.tapKey('3')">3</button>
+        <button class="pos-num-btn" onclick="window.PosAuth.tapKey('4')">4</button>
+        <button class="pos-num-btn" onclick="window.PosAuth.tapKey('5')">5</button>
+        <button class="pos-num-btn" onclick="window.PosAuth.tapKey('6')">6</button>
+        <button class="pos-num-btn" onclick="window.PosAuth.tapKey('7')">7</button>
+        <button class="pos-num-btn" onclick="window.PosAuth.tapKey('8')">8</button>
+        <button class="pos-num-btn" onclick="window.PosAuth.tapKey('9')">9</button>
+        <button class="pos-num-btn" style="background: #f1f5f9; color: var(--text-secondary); font-size: 0.85rem;" onclick="window.PosAuth.clearPin()">CLEAR</button>
+        <button class="pos-num-btn" onclick="window.PosAuth.tapKey('0')">0</button>
+        <button class="pos-num-btn" style="background: #f1f5f9; color: var(--text-secondary); font-size: 1.2rem;" onclick="window.PosAuth.backspace()">⌫</button>
+      </div>
+
+      <div id="cashier-auth-error" style="display: none; color: #dc2626; font-size: 0.82rem; font-weight: 700; margin-bottom: 12px;"></div>
+
+      <!-- Quick Demo Tap Shortcuts -->
+      <div style="display: flex; gap: 8px;">
+        <button onclick="window.PosAuth.quickLogin('101', '1234')" style="flex: 1; background: #ecfdf5; border: 1px solid #a7f3d0; color: #059669; padding: 8px; border-radius: 8px; font-size: 0.76rem; font-weight: 700; cursor: pointer;">
+          ⚡ Quick #101 (PIN: 1234)
+        </button>
+        <button onclick="window.PosAuth.quickLogin('102', '5678')" style="flex: 1; background: #eff6ff; border: 1px solid #bfdbfe; color: #2563eb; padding: 8px; border-radius: 8px; font-size: 0.76rem; font-weight: 700; cursor: pointer;">
+          ⚡ Quick #102 (PIN: 5678)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .pos-num-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      padding: 12px 0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .pos-num-btn:active {
+      background: var(--primary);
+      color: #fff;
+      transform: scale(0.95);
+    }
+  </style>
+
+  <!-- Outside Geofence Pending Orders Alert Section -->
+  <section id="outside-approvals-container" style="display: none; padding: 16px 28px 0;">
+    <div style="background: linear-gradient(135deg, #fef2f2, #fff1f2); border: 2px solid #f87171; border-radius: var(--radius-lg); padding: 18px 24px; box-shadow: 0 10px 25px rgba(220, 38, 38, 0.15);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.5rem;">⚠️</span>
+          <div>
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: #991b1b; margin: 0;">Outside Geofence Approval Gate</h3>
+            <p style="font-size: 0.8rem; color: #b91c1c; margin: 2px 0 0;">These orders were placed from outside the dining area. Kitchen tickets are on hold until you confirm table occupancy.</p>
+          </div>
+        </div>
+        <span class="badge" style="background: #dc2626; color: #fff; font-weight: 800;" id="approvals-count-badge">1 Pending</span>
+      </div>
+
+      <div id="approvals-cards-list" style="display: flex; flex-direction: column; gap: 12px;">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Statistics Bar -->
+  <section class="floor-stats-banner">
+    <div class="stat-widget">
+      <div class="stat-text">
+        <div class="stat-label">Daily Revenue</div>
+        <div class="stat-value" id="stat-revenue">₹0.00</div>
+      </div>
+      <div class="stat-icon-wrapper stat-icon-green">💰</div>
+    </div>
+
+    <div class="stat-widget">
+      <div class="stat-text">
+        <div class="stat-label">Active Tables</div>
+        <div class="stat-value" id="stat-occupied">0 / 8</div>
+      </div>
+      <div class="stat-icon-wrapper stat-icon-amber">🍽️</div>
+    </div>
+
+    <div class="stat-widget">
+      <div class="stat-text">
+        <div class="stat-label">Bills Settled</div>
+        <div class="stat-value" id="stat-orders">0</div>
+      </div>
+      <div class="stat-icon-wrapper stat-icon-blue">🧾</div>
+    </div>
+
+    <div class="stat-widget">
+      <div class="stat-text">
+        <div class="stat-label">System Status</div>
+        <div class="stat-value" style="font-size: 1.15rem; color: #10b981; display:flex; align-items:center; gap:6px;">
+          <span style="width:10px; height:10px; border-radius:50%; background:#10b981; display:inline-block;"></span>
+          Online &amp; Synced
+        </div>
+      </div>
+      <div class="stat-icon-wrapper stat-icon-purple">⚡</div>
+    </div>
+  </section>
+
+  <!-- Floor Map Section -->
+  <main class="floor-main-container">
+    <div class="section-header">
+      <div>
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-primary);">Dine-In Floor Map</h2>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 2px;">
+          Real-time occupancy, order statuses, and running table tabs. Click any table to open billing or reset.
+        </p>
+      </div>
+
+      <div class="floor-legend">
+        <div class="legend-item">
+          <span class="legend-dot legend-available"></span>
+          <span>Available</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot legend-cooking"></span>
+          <span>Cooking / Active</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot legend-served"></span>
+          <span>Food Served</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot legend-bill"></span>
+          <span>Bill Requested</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tables Grid Container -->
+    <div class="tables-grid" id="tables-grid">
+      <!-- Injected dynamically -->
+    </div>
+  </main>
+
+  <!-- POS Billing & Settlement Modal -->
+  <div class="pos-modal-backdrop" id="billing-modal">
+    <div class="pos-modal-card">
+      <div class="pos-modal-header">
+        <div>
+          <h3 id="modal-table-title" style="font-size: 1.3rem; font-weight: 800;">Table 1 • Running Tab</h3>
+          <p id="modal-table-subtitle" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Order Summary &amp; Bill Generation</p>
+        </div>
+        <button id="close-modal-btn" style="background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+
+      <div class="pos-modal-body">
+        <!-- Left: Itemized Order & Discount Controls -->
+        <div>
+          <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px;">Consolidated Items (All Rounds)</h4>
+          <div style="max-height: 250px; overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius-md);">
+            <table class="items-bill-table">
+              <thead>
+                <tr>
+                  <th>Dish</th>
+                  <th>Qty</th>
+                  <th>Rate</th>
+                  <th style="text-align: right;">Total</th>
+                </tr>
+              </thead>
+              <tbody id="bill-items-tbody">
+                <!-- Table rows injected -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Discount & Notes Field -->
+          <div style="margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 4px;">
+                Discount (₹ Flat)
+              </label>
+              <input type="number" id="input-discount" value="0" min="0" step="5" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-md); font-weight: 700;">
+            </div>
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 4px;">
+                Cashier ID
+              </label>
+              <input type="text" value="Staff #04 (Cashier)" readonly style="width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: #f8fafc; color: var(--text-muted);">
+            </div>
+          </div>
+
+          <!-- Payment Method Choice -->
+          <div style="margin-top: 18px;">
+            <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 8px;">
+              Select Payment Method
+            </label>
+            <div class="payment-methods-grid">
+              <button class="pay-method-btn selected" data-method="Cash">
+                <span style="font-size: 1.3rem;">💵</span>
+                <span>Cash</span>
+              </button>
+              <button class="pay-method-btn" data-method="Card">
+                <span style="font-size: 1.3rem;">💳</span>
+                <span>Card / POS</span>
+              </button>
+              <button class="pay-method-btn" data-method="UPI">
+                <span style="font-size: 1.3rem;">📱</span>
+                <span>UPI / QR</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Standard 80mm ESC/POS Printable Thermal Receipt Preview -->
+        <div>
+          <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px;">80mm Thermal Receipt Preview</h4>
+          <div class="receipt-paper" id="receipt-print-area">
+            <div class="receipt-header">
+              <div class="receipt-restaurant-name">SAFFRON &amp; SILK BISTRO</div>
+              <div style="font-size: 0.75rem; margin-top: 2px;">42 Heritage Way, Connaught Place</div>
+              <div style="font-size: 0.75rem;">GSTIN: 07AAACS1234F1Z8</div>
+              <div class="receipt-divider"></div>
+              <div class="receipt-row" style="font-size: 0.75rem;">
+                <span id="receipt-invoice-id">INV-1092</span>
+                <span id="receipt-date-time">--/--/----</span>
+              </div>
+              <div class="receipt-row" style="font-size: 0.75rem;">
+                <strong id="receipt-table-no">Table 1</strong>
+                <span>Dine-In</span>
+              </div>
+            </div>
+
+            <div id="receipt-items-container">
+              <!-- Item rows -->
+            </div>
+
+            <div class="receipt-divider"></div>
+
+            <div class="receipt-row">
+              <span>Subtotal:</span>
+              <span id="receipt-subtotal">₹0.00</span>
+            </div>
+            <div class="receipt-row">
+              <span>CGST (2.5%):</span>
+              <span id="receipt-cgst">₹0.00</span>
+            </div>
+            <div class="receipt-row">
+              <span>SGST (2.5%):</span>
+              <span id="receipt-sgst">₹0.00</span>
+            </div>
+            <div class="receipt-row" id="receipt-discount-row" style="display: none; color: #dc2626;">
+              <span>Discount:</span>
+              <span id="receipt-discount">-₹0.00</span>
+            </div>
+
+            <div class="receipt-divider"></div>
+
+            <div class="receipt-row receipt-total">
+              <span>TOTAL DUE:</span>
+              <span id="receipt-grand-total">₹0.00</span>
+            </div>
+
+            <div style="text-align: center; margin-top: 14px; font-size: 0.75rem;">
+              <div>Paid via: <strong id="receipt-pay-method">Cash</strong></div>
+              <div style="margin-top: 6px; font-style: italic;">Thank you for dining with us!</div>
+              <div>Please visit again</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pos-modal-footer">
+        <button class="btn-print-receipt" id="btn-print-receipt">
+          <span>🖨️ Print Receipt (80mm)</span>
+        </button>
+        <button class="btn-collect-reset" id="btn-collect-reset">
+          <span>💰 Confirm Payment &amp; Clear Table</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Socket.IO & App Scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/socket-client.js"></script>
+  <script src="js/counter.js"></script>
+</body>
+</html>

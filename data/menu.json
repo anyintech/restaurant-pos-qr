@@ -1,0 +1,180 @@
+{
+  "categories": [
+    {
+      "id": "all",
+      "name": "All Items",
+      "icon": "🍽️"
+    },
+    {
+      "id": "starters",
+      "name": "Appetizers & Starters",
+      "icon": "🍟"
+    },
+    {
+      "id": "mains",
+      "name": "Signature Mains",
+      "icon": "🍔"
+    },
+    {
+      "id": "pizzas",
+      "name": "Artisanal Pizzas",
+      "icon": "🍕"
+    },
+    {
+      "id": "beverages",
+      "name": "Drinks & Cocktails",
+      "icon": "🍹"
+    },
+    {
+      "id": "desserts",
+      "name": "Decadent Desserts",
+      "icon": "🍰"
+    }
+  ],
+  "items": [
+    {
+      "id": "item_1",
+      "name": "Truffle Parmesan Hand-Cut Fries",
+      "category": "starters",
+      "price": 7.99,
+      "description": "Crispy golden potatoes tossed with Italian black truffle oil, freshly grated aged parmesan, and fresh rosemary with garlic aioli dip.",
+      "image": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80",
+      "isVeg": true,
+      "isSpicy": false,
+      "badge": "Popular",
+      "available": true
+    },
+    {
+      "id": "item_2",
+      "name": "Firecracker Glazed Wings",
+      "category": "starters",
+      "price": 11.5,
+      "description": "Crispy chicken wings glazed in a spicy sweet chili honey glaze, topped with toasted sesame seeds and scallions.",
+      "image": "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=600&q=80",
+      "isVeg": false,
+      "isSpicy": true,
+      "badge": "Chef's Pick",
+      "available": true
+    },
+    {
+      "id": "item_3",
+      "name": "Creamy Burrata Caprese Crostini",
+      "category": "starters",
+      "price": 12,
+      "description": "Imported creamy burrata over toasted artisanal sourdough, heirloom cherry tomatoes, basil pesto, and balsamic glaze reduction.",
+      "image": "https://images.unsplash.com/photo-1592417817098-8f3d69102353?auto=format&fit=crop&w=600&q=80",
+      "isVeg": true,
+      "isSpicy": false,
+      "badge": "Artisanal",
+      "available": true
+    },
+    {
+      "id": "item_4",
+      "name": "The Grand Wagyu Smash Burger",
+      "category": "mains",
+      "price": 16.99,
+      "description": "Double smash Australian wagyu patties, melted Vermont sharp cheddar, caramelized onions, secret smoky bistro sauce on toasted brioche.",
+      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80",
+      "isVeg": false,
+      "isSpicy": false,
+      "badge": "Bestseller",
+      "available": true
+    },
+    {
+      "id": "item_5",
+      "name": "Smoked Paneer Tikka Bowl",
+      "category": "mains",
+      "price": 14.5,
+      "description": "Clay oven charred cottage cheese cubes marinated in aromatic tandoori spices, served over saffron basmati rice with mint raita.",
+      "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=600&q=80",
+      "isVeg": true,
+      "isSpicy": true,
+      "badge": "Vegetarian",
+      "available": true
+    },
+    {
+      "id": "item_6",
+      "name": "Pan-Seared Atlantic Salmon",
+      "category": "mains",
+      "price": 21,
+      "description": "Crispy skin Atlantic salmon filet served with whipped garlic mash, roasted asparagus spears, and lemon caper butter reduction.",
+      "image": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=600&q=80",
+      "isVeg": false,
+      "isSpicy": false,
+      "badge": "Healthy",
+      "available": true
+    },
+    {
+      "id": "item_7",
+      "name": "Wild Truffle & Mushroom Pizza",
+      "category": "pizzas",
+      "price": 17.5,
+      "description": "Hand-stretched 48-hour fermented Neapolitan dough, fior di latte mozzarella, roasted cremini & shiitake mushrooms, truffle cream.",
+      "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80",
+      "isVeg": true,
+      "isSpicy": false,
+      "badge": "Stone-Baked",
+      "available": true
+    },
+    {
+      "id": "item_8",
+      "name": "Spicy Pepperoni & Hot Honey Pizza",
+      "category": "pizzas",
+      "price": 18,
+      "description": "San Marzano tomato base, cupping pepperoni, fresh mozzarella, finished with chili flakes and a generous drizzle of hot Mike's honey.",
+      "image": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=600&q=80",
+      "isVeg": false,
+      "isSpicy": true,
+      "badge": "Signature",
+      "available": true
+    },
+    {
+      "id": "item_9",
+      "name": "Passionfruit Mint Sparkler Mocktail",
+      "category": "beverages",
+      "price": 6.5,
+      "description": "Fresh passionfruit pulp, crushed garden mint, fresh lime juice, organic agave, topped with sparkling Perrier.",
+      "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80",
+      "isVeg": true,
+      "isSpicy": false,
+      "badge": "Refreshing",
+      "available": true
+    },
+    {
+      "id": "item_10",
+      "name": "Smoked Bourbon Old Fashioned",
+      "category": "beverages",
+      "price": 13,
+      "description": "Kentucky straight bourbon, Angostura bitters, pure cane sugar cube, expressed orange peel, smoked with French oak wood chips.",
+      "image": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=600&q=80",
+      "isVeg": true,
+      "isSpicy": false,
+      "badge": "Crafted",
+      "available": true
+    },
+    {
+      "id": "item_11",
+      "name": "Warm Belgian Molten Lava Cake",
+      "category": "desserts",
+      "price": 9.5,
+      "description": "Warm dark Valrhona chocolate cake with an oozing rich chocolate center, paired with Madagascar vanilla bean ice cream.",
+      "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80",
+      "isVeg": true,
+      "isSpicy": false,
+      "badge": "Decadent",
+      "available": true
+    },
+    {
+      "id": "item_12",
+      "name": "Classic New York Berry Cheesecake",
+      "category": "desserts",
+      "price": 8.5,
+      "description": "Velvety smooth Philadelphia cream cheese filling over buttery Graham cracker crust, topped with fresh raspberry compote.",
+      "image": "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80",
+      "isVeg": true,
+      "isSpicy": false,
+      "badge": "Classic",
+      "available": true
+    }
+  ]
+}

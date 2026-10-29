@@ -1,0 +1,26 @@
+[
+  {
+    "role": "kitchen",
+    "loginId": "cook",
+    "pin": "2024",
+    "name": "Line Chef (Main Kitchen)"
+  },
+  {
+    "role": "cashier",
+    "loginId": "101",
+    "pin": "1234",
+    "name": "Priya Sharma (Cashier #1)"
+  },
+  {
+    "role": "cashier",
+    "loginId": "102",
+    "pin": "5678",
+    "name": "Rahul Verma (Cashier #2)"
+  },
+  {
+    "role": "admin",
+    "loginId": "admin",
+    "pin": "9999",
+    "name": "Restaurant Manager"
+  }
+]

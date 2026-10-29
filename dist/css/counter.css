@@ -1,0 +1,472 @@
+/* Counter / Cashier POS & Floor Management Styling */
+.pos-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f1f5f9;
+}
+
+/* POS Top Bar */
+.pos-navbar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.pos-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pos-brand-group h1 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pos-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-pill-btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: #f8fafc;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.nav-pill-btn:hover, .nav-pill-btn.active {
+  background: var(--secondary);
+  color: #ffffff;
+  border-color: var(--secondary);
+}
+
+/* Floor Quick Stats Bar */
+.floor-stats-banner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 20px 28px 4px;
+}
+
+.stat-widget {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-text .stat-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-text .stat-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+
+.stat-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.stat-icon-green { background: #ecfdf5; color: #059669; }
+.stat-icon-blue { background: #eff6ff; color: #2563eb; }
+.stat-icon-amber { background: #fffbeb; color: #d97706; }
+.stat-icon-purple { background: #f5f3ff; color: #7c3aed; }
+
+/* Table Floor Grid */
+.floor-main-container {
+  padding: 24px 28px;
+  flex: 1;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.floor-legend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legend-available { background: #10b981; }
+.legend-cooking { background: #f59e0b; }
+.legend-served { background: #8b5cf6; }
+.legend-bill { background: #ef4444; }
+
+.tables-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Individual Table Card */
+.table-pos-card {
+  background: #ffffff;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.table-pos-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.table-pos-card.table-available {
+  border-color: #d1fae5;
+  background: linear-gradient(180deg, #ffffff 70%, #f0fdf4 100%);
+}
+
+.table-pos-card.table-cooking {
+  border-color: #fde68a;
+  background: linear-gradient(180deg, #ffffff 70%, #fffbeb 100%);
+}
+
+.table-pos-card.table-ready {
+  border-color: #bfdbfe;
+  background: linear-gradient(180deg, #ffffff 70%, #eff6ff 100%);
+}
+
+.table-pos-card.table-served {
+  border-color: #ddd6fe;
+  background: linear-gradient(180deg, #ffffff 70%, #faf5ff 100%);
+}
+
+.table-pos-card.table-bill_requested {
+  border-color: #fca5a5;
+  background: linear-gradient(180deg, #ffffff 70%, #fef2f2 100%);
+  animation: pulse-border-red 1.8s infinite;
+}
+
+.table-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.table-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.table-meta {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.table-card-center {
+  margin: 16px 0;
+  flex: 1;
+}
+
+.tab-amount-display {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.tab-orders-count {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.table-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.btn-card-action {
+  flex: 1;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.btn-view-tab {
+  background: #f1f5f9;
+  color: var(--text-primary);
+}
+
+.btn-view-tab:hover {
+  background: #e2e8f0;
+}
+
+.btn-prepare-bill {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+.btn-prepare-bill:hover {
+  background: var(--primary-hover);
+}
+
+/* POS Billing Modal / Side Drawer */
+.pos-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.pos-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pos-modal-card {
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  width: 92%;
+  max-width: 820px;
+  max-height: 90vh;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalScaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.pos-modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+}
+
+.pos-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .pos-modal-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Itemized Order Table */
+.items-bill-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.items-bill-table th {
+  text-align: left;
+  padding: 10px;
+  background: #f8fafc;
+  color: var(--text-secondary);
+  font-weight: 700;
+  border-bottom: 2px solid var(--border);
+}
+
+.items-bill-table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Thermal Receipt Preview Box */
+.receipt-paper {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  padding: 24px 20px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  color: #1e293b;
+  border-radius: 4px;
+  position: relative;
+}
+
+.receipt-paper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: radial-gradient(circle, transparent 4px, #fff 5px);
+  background-size: 10px 10px;
+  transform: translateY(-6px);
+}
+
+.receipt-header {
+  text-align: center;
+  margin-bottom: 16px;
+  border-bottom: 1px dashed #94a3b8;
+  padding-bottom: 12px;
+}
+
+.receipt-restaurant-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.receipt-divider {
+  border-top: 1px dashed #94a3b8;
+  margin: 12px 0;
+}
+
+.receipt-total {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+/* Payment Controls */
+.payment-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.pay-method-btn {
+  border: 2px solid var(--border);
+  background: #f8fafc;
+  padding: 12px 8px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pay-method-btn.selected {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  color: var(--primary-hover);
+}
+
+.pos-modal-footer {
+  padding: 18px 24px;
+  border-top: 1px solid var(--border);
+  background: #f8fafc;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-print-receipt {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-collect-reset {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+
+.btn-collect-reset:hover {
+  background: #059669;
+}

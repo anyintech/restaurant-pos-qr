@@ -1,0 +1,90 @@
+[
+  {
+    "invoiceId": "INV-487773",
+    "tableId": 1,
+    "tableName": "Table 1",
+    "items": [
+      {
+        "name": "Truffle Parmesan Hand-Cut Fries",
+        "quantity": 1,
+        "price": 7.99,
+        "total": 7.99,
+        "orderedBy": "yash"
+      },
+      {
+        "name": "Warm Belgian Molten Lava Cake",
+        "quantity": 3,
+        "price": 9.5,
+        "total": 28.5,
+        "orderedBy": "yash"
+      },
+      {
+        "name": "Truffle Parmesan Hand-Cut Fries",
+        "quantity": 1,
+        "price": 7.99,
+        "total": 7.99,
+        "orderedBy": "yash"
+      },
+      {
+        "name": "Truffle Parmesan Hand-Cut Fries",
+        "quantity": 1,
+        "price": 7.99,
+        "total": 7.99,
+        "orderedBy": "Guest 2 · Mac"
+      },
+      {
+        "name": "Creamy Burrata Caprese Crostini",
+        "quantity": 1,
+        "price": 12,
+        "total": 12,
+        "orderedBy": "Guest 2 · Mac"
+      },
+      {
+        "name": "Firecracker Glazed Wings",
+        "quantity": 1,
+        "price": 11.5,
+        "total": 11.5,
+        "orderedBy": "Guest 2 · Mac"
+      }
+    ],
+    "subtotal": 75.97,
+    "tax": 3.8,
+    "discount": 0,
+    "finalTotal": 79.77,
+    "paymentMethod": "UPI / QR",
+    "cashier": "Priya Sharma (Cashier #1)",
+    "cashierId": "101",
+    "paidAt": "2026-10-26T18:31:27.773Z",
+    "formattedDate": "10/27/2026, 12:01:27 AM"
+  },
+  {
+    "invoiceId": "INV-665290",
+    "tableId": 1,
+    "tableName": "Table 1",
+    "items": [
+      {
+        "name": "The Grand Wagyu Smash Burger",
+        "quantity": 1,
+        "price": 16.99,
+        "total": 16.99,
+        "orderedBy": "Guest 1 · Mac"
+      },
+      {
+        "name": "Pan-Seared Atlantic Salmon",
+        "quantity": 1,
+        "price": 21,
+        "total": 21,
+        "orderedBy": "Guest 1 · Mac"
+      }
+    ],
+    "subtotal": 37.99,
+    "tax": 1.9,
+    "discount": 0,
+    "finalTotal": 39.89,
+    "paymentMethod": "Cash",
+    "cashier": "Priya Sharma (Cashier #1)",
+    "cashierId": "101",
+    "paidAt": "2026-10-26T18:34:25.290Z",
+    "formattedDate": "10/27/2026, 12:04:25 AM"
+  }
+]
